@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -29,7 +31,7 @@ import java.util.ArrayList;
 
 import edu.rosehulman.trigon.dhucafe.dummy.DummyContent;
 
-public class MainActivity extends AppCompatActivity  implements  NewsLIstFragment.OnListFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity implements  NewsLIstFragment.OnListFragmentInteractionListener{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -55,7 +57,7 @@ public class MainActivity extends AppCompatActivity  implements  NewsLIstFragmen
         setContentView(R.layout.activity_main);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.container);
-        viewPager.setOffscreenPageLimit(3);
+        viewPager.setOffscreenPageLimit(1);
         //Paint the StatusBar to DarkPrimary prevent from becoming transparent.
         getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -77,8 +79,7 @@ public class MainActivity extends AppCompatActivity  implements  NewsLIstFragmen
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 try {
                     //利用Intent打开微信
                     Uri uri = Uri.parse("alipayqr://platformapi/startapp?saId=10000007");
@@ -119,16 +120,27 @@ public class MainActivity extends AppCompatActivity  implements  NewsLIstFragmen
 
     @Override
     public void onListFragmentInteraction(DummyContent.DummyItem item) {
-        Log.d("onListFragmentI","?");
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        Log.d("fragmentmangerInteraction",getSupportFragmentManager().toString());
-        NewsDetail fragment =(new NewsDetail()).newInstance(item.id,item.details);
-
-        ft.replace(R.id.container,fragment);
-        ft.addToBackStack("detail");
-        ft.commit();
+//        Log.d("onListFragmentI","?");
+//        FragmentTransaction ft =getSupportFragmentManager().beginTransaction();
+//        //Log.d("fragmentmangerInteraction",getSupportFragmentManager().toString());
+//        NewsDetail fragment =(new NewsDetail()).newInstance(item.id,item.details);
+//
+//        ft.replace(R.id.outViewPager,fragment);
+//        ft.addToBackStack("detail");
+//        ft.commit();
+//        mSectionsPagerAdapter.notifyDataSetChanged();
+        Log.d("callback",item.id);
+        mSectionsPagerAdapter.passNewsItem(item);
+        mSectionsPagerAdapter.setDetails(0);
         mSectionsPagerAdapter.notifyDataSetChanged();
+        Log.d("have notified",item.id+"");
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Log.d("Main BackPress","press");
     }
 
     /**
@@ -170,19 +182,60 @@ public class MainActivity extends AppCompatActivity  implements  NewsLIstFragmen
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-        private ArrayList<Fragment> fragments = new ArrayList<>();
+    public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
+        private Fragment[] fragments = new Fragment[3];
+        private Fragment[] details = new Fragment[3];
+        private boolean[] isDetailed ={false,false,false};
+        private DummyContent.DummyItem test;
 
+        public void setDetails(int position){
+            isDetailed[position]=true;
+        }
+        public void passNewsItem(DummyContent.DummyItem test){
+            this.test=test;
+        }
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
+        public int getItemPosition(Object object) {
+                return POSITION_NONE;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            Log.d("inst",position+"");
+//            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//            String name = "android:switcher:" + container.getId() + ":" + position;
+//            Fragment fragment = getSupportFragmentManager().findFragmentByTag(name);
+//            if (fragment !=null){
+//            Log.d("getfragment",fragment.toString());
+//            transaction.remove(fragment);}
+//            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//            for (int i=0; i<3; i++){
+//                Fragment fg = fragments[i];
+//                if (fg == null) continue;
+//                transaction.remove(fg);
+//            }
+            return super.instantiateItem(container, position);
+        }
+
+        @Override
         public Fragment getItem(int position) {
+
             Log.d("fragmentmanger",getSupportFragmentManager().toString());
             Log.d("getItem in ",position+"");
             //0th item is news list.
-            if (position ==0) return (new NewsLIstFragment()).newInstance(1);
+            if (position ==0) {
+                    if (isDetailed[0]){
+                        details[0] = (new NewsDetail()).newInstance(test.id,test.details);
+                        return details[0];
+                    }
+                fragments[0] = (new NewsLIstFragment()).newInstance(1);
+                return fragments[0];
+
+            };
 
             //1th item is menu list (TODO)
 
