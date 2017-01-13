@@ -1,10 +1,12 @@
 package edu.rosehulman.trigon.dhucafe;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -22,6 +24,8 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import edu.rosehulman.trigon.dhucafe.dummy.DummyContent;
 
@@ -44,9 +48,16 @@ public class MainActivity extends AppCompatActivity  implements  NewsLIstFragmen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
+        ViewPager viewPager = (ViewPager) findViewById(R.id.container);
+        viewPager.setOffscreenPageLimit(3);
+        //Paint the StatusBar to DarkPrimary prevent from becoming transparent.
+        getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -60,6 +71,8 @@ public class MainActivity extends AppCompatActivity  implements  NewsLIstFragmen
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
+
+        //FAB暂时保留
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +119,15 @@ public class MainActivity extends AppCompatActivity  implements  NewsLIstFragmen
 
     @Override
     public void onListFragmentInteraction(DummyContent.DummyItem item) {
+        Log.d("onListFragmentI","?");
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Log.d("fragmentmangerInteraction",getSupportFragmentManager().toString());
+        NewsDetail fragment =(new NewsDetail()).newInstance(item.id,item.details);
+
+        ft.replace(R.id.container,fragment);
+        ft.addToBackStack("detail");
+        ft.commit();
+        mSectionsPagerAdapter.notifyDataSetChanged();
 
     }
 
@@ -149,6 +171,7 @@ public class MainActivity extends AppCompatActivity  implements  NewsLIstFragmen
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
+        private ArrayList<Fragment> fragments = new ArrayList<>();
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -156,8 +179,13 @@ public class MainActivity extends AppCompatActivity  implements  NewsLIstFragmen
 
         @Override
         public Fragment getItem(int position) {
+            Log.d("fragmentmanger",getSupportFragmentManager().toString());
             Log.d("getItem in ",position+"");
+            //0th item is news list.
             if (position ==0) return (new NewsLIstFragment()).newInstance(1);
+
+            //1th item is menu list (TODO)
+
 
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
