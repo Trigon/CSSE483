@@ -1,0 +1,21 @@
+﻿
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch trigon
+# Your branch is up-to-date with 'origin/trigon'.
+#
+# Changes to be committed:
+#	modified:   DHUCafe/app/build.gradle
+#	modified:   DHUCafe/app/src/main/java/edu/rosehulman/trigon/dhucafe/MainActivity.java
+#	new file:   DHUCafe/app/src/main/java/edu/rosehulman/trigon/dhucafe/MyNewsLIstRecyclerViewAdapter.java
+#	new file:   DHUCafe/app/src/main/java/edu/rosehulman/trigon/dhucafe/NewsLIstFragment.java
+#	new file:   DHUCafe/app/src/main/java/edu/rosehulman/trigon/dhucafe/dummy/DummyContent.java
+#	new file:   DHUCafe/app/src/main/res/layout/fragment_news_list_content.xml
+#	new file:   DHUCafe/app/src/main/res/layout/fragment_news_list_layout.xml
+#	modified:   DHUCafe/app/src/main/res/values/dimens.xml
+#	new file:   resource/news_0.json
+#	new file:   resource/news_1.json
+#	new file:   resource/news_info.json
+#	new file:   resource/test.bmp
+#
+
