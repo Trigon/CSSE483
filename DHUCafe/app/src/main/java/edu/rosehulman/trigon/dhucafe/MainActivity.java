@@ -1,14 +1,9 @@
 package edu.rosehulman.trigon.dhucafe;
 
-import android.content.Intent;
-import android.graphics.Color;
-import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -27,9 +22,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
-import edu.rosehulman.trigon.dhucafe.dummy.DummyContent;
+import edu.rosehulman.trigon.dhucafe.items.NewsContent;
 
 public class MainActivity extends AppCompatActivity implements  NewsLIstFragment.OnListFragmentInteractionListener{
 
@@ -41,7 +37,9 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
+    private static boolean mBackKeyPressed = false;
     private SectionsPagerAdapter mSectionsPagerAdapter;
+
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -66,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
+
+
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -79,17 +79,18 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                try {
-                    //利用Intent打开微信
-                    Uri uri = Uri.parse("alipayqr://platformapi/startapp?saId=10000007");
-                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(intent);
-                } catch (Exception e) {
-                    //若无法正常跳转，在此进行错误处理
-                    Snackbar.make(view, "fuck", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
+
+                Snackbar.make(view, mViewPager.getCurrentItem()+"", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+//                try {
+//                    //利用Intent打开微信
+//                    Uri uri = Uri.parse("alipayqr://platformapi/startapp?saId=10000007");
+//                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+//                    startActivity(intent);
+//                } catch (Exception e) {
+//                    //若无法正常跳转，在此进行错误处理
+//                    Snackbar.make(view, "fuck", Snackbar.LENGTH_LONG)
+//                            .setAction("Action", null).show();
+//                }
             }
         });
 
@@ -119,19 +120,10 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
     }
 
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
-//        Log.d("onListFragmentI","?");
-//        FragmentTransaction ft =getSupportFragmentManager().beginTransaction();
-//        //Log.d("fragmentmangerInteraction",getSupportFragmentManager().toString());
-//        NewsDetail fragment =(new NewsDetail()).newInstance(item.id,item.details);
-//
-//        ft.replace(R.id.outViewPager,fragment);
-//        ft.addToBackStack("detail");
-//        ft.commit();
-//        mSectionsPagerAdapter.notifyDataSetChanged();
+    public void onListFragmentInteraction(NewsContent.NewsItem item) {
         Log.d("callback",item.id);
         mSectionsPagerAdapter.passNewsItem(item);
-        mSectionsPagerAdapter.setDetails(0);
+        mSectionsPagerAdapter.setDetails(0,true);
         mSectionsPagerAdapter.notifyDataSetChanged();
         Log.d("have notified",item.id+"");
 
@@ -139,8 +131,26 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        int position = mViewPager.getCurrentItem();
+        if (mSectionsPagerAdapter.isDetail(position)){
+            mSectionsPagerAdapter.setDetails(position,false);
+            mSectionsPagerAdapter.notifyDataSetChanged();
+            return;
+        }
+        if(!mBackKeyPressed){
+            Toast.makeText(this, getResources().getString(R.string.doublepressback), Toast.LENGTH_SHORT).show();
+            mBackKeyPressed = true;
+            new Timer().schedule(new TimerTask() {//
+                @Override
+                public void run() {
+                    mBackKeyPressed = false;
+                    }
+                }, 2000);
+            return;
+            }
         Log.d("Main BackPress","press");
+        super.onBackPressed();
+
     }
 
     /**
@@ -186,12 +196,14 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
         private Fragment[] fragments = new Fragment[3];
         private Fragment[] details = new Fragment[3];
         private boolean[] isDetailed ={false,false,false};
-        private DummyContent.DummyItem test;
-
-        public void setDetails(int position){
-            isDetailed[position]=true;
+        private NewsContent.NewsItem test;
+        public boolean isDetail(int position){
+            return isDetailed[position];
         }
-        public void passNewsItem(DummyContent.DummyItem test){
+        public void setDetails(int position,boolean flag){
+            isDetailed[position]=flag;
+        }
+        public void passNewsItem(NewsContent.NewsItem test){
             this.test=test;
         }
         public SectionsPagerAdapter(FragmentManager fm) {
