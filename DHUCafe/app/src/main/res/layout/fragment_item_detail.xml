@@ -1,0 +1,26 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    tools:context="edu.rosehulman.trigon.dhucafe.ItemDetail">
+
+    <!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:gravity="left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_image"
+        android:src="@drawable/coffee"
+        tools:ignore="RtlHardcoded" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/item_image"
+        android:layout_marginTop="20dp"
+        android:textSize="30sp"
+        android:id="@+id/item_name"
+        android:text="@string/coffee" />
+
+</RelativeLayout>

@@ -250,7 +250,16 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
             };
 
             //1th item is menu list (TODO)
-
+            if(position == 1) {
+                if (isDetailed[1]){
+                    // TODO: REPLACE NEWS ITEM LIST VIEW WITH COFFEE ITEM LIST VIEW!!!
+                    details[1] = (new NewsDetail()).newInstance(test.id,test.details);
+                    return details[1];
+                }
+                // TODO: REPLACE NEWS ITEM LIST VIEW WITH COFFEE ITEM LIST VIEW!!!
+                fragments[1] = (new NewsLIstFragment()).newInstance(2);
+                return fragments[1];
+            }
 
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
