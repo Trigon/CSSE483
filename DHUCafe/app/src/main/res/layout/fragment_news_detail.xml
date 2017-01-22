@@ -1,25 +1,29 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="10dp"
-    tools:context="edu.rosehulman.trigon.dhucafe.NewsDetail">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textSize="30sp"
-        android:id="@+id/title"
-        android:text="@string/hello_blank_fragment" />
-
-    <ImageView
-        android:layout_below="@id/title"
-        android:id="@+id/dimage"
-        android:src="@drawable/test"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-</RelativeLayout>
+    android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textSize="30sp"
+                android:id="@+id/title"
+                android:text="@string/hello_blank_fragment" />
+            <ImageView
+                android:layout_below="@id/title"
+                android:id="@+id/dimage"
+                android:src="@drawable/test"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="50sp"
+                android:text="test\ntest\ntest\ntest\ntest\ntest\ntest\n"/>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>

@@ -23,6 +23,7 @@ public class NewsLIstFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
+    private static RecyclerView mrecycleView =null;
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
@@ -33,7 +34,9 @@ public class NewsLIstFragment extends Fragment {
      */
     public NewsLIstFragment() {
     }
-
+    public void update(){
+        mrecycleView=null;
+    }
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static NewsLIstFragment newInstance(int columnCount) {
@@ -56,18 +59,21 @@ public class NewsLIstFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if (mrecycleView!=null) return mrecycleView;
         View view = inflater.inflate(R.layout.fragment_news_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
+
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             recyclerView.setAdapter(new MyNewsLIstRecyclerViewAdapter(NewsContent.ITEMS, mListener));
+            mrecycleView=recyclerView;
         }
         return view;
     }

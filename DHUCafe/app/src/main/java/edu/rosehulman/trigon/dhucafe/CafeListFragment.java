@@ -23,6 +23,7 @@ public class CafeListFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
+    private static RecyclerView mrecycleView =null;
     // TODO: Customize parameters
     private int mColumnCount = 2;
     private OnListFragmentInteractionListener mListener;
@@ -31,6 +32,10 @@ public class CafeListFragment extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
+
+    public void update(){
+        mrecycleView=null;
+    }
     public CafeListFragment() {
     }
 
@@ -56,6 +61,7 @@ public class CafeListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if (mrecycleView!=null) return mrecycleView;
         View view = inflater.inflate(R.layout.fragment_cafe_list, container, false);
 
         // Set the adapter
@@ -68,6 +74,7 @@ public class CafeListFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             recyclerView.setAdapter(new MyCafeRecyclerViewAdapter(CafeContent.ITEMS, mListener));
+            mrecycleView=recyclerView;
         }
         return view;
     }
