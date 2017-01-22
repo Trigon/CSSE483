@@ -28,6 +28,7 @@ import java.util.TimerTask;
 
 import edu.rosehulman.trigon.dhucafe.items.CafeContent;
 import edu.rosehulman.trigon.dhucafe.items.NewsContent;
+import edu.rosehulman.trigon.dhucafe.items.User;
 
 public class MainActivity extends AppCompatActivity implements  NewsLIstFragment.OnListFragmentInteractionListener,CafeListFragment.OnListFragmentInteractionListener,LoginFragment.OnFragmentInteractionListener{
 
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
      */
     private static boolean mBackKeyPressed = false;
     private SectionsPagerAdapter mSectionsPagerAdapter;
+    private User user;
 
 
     /**
@@ -164,7 +166,11 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onFragmentInteraction(String username) {
+        mSectionsPagerAdapter.isLogin = true;
+        user=new User(username);
+        mSectionsPagerAdapter.notifyDataSetChanged();
+        return;
 
     }
 
@@ -209,6 +215,7 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
+        private boolean isLogin;
         private Fragment[] fragments = new Fragment[3];
         private Fragment[] details = new Fragment[3];
         private boolean[] isDetailed ={false,false,false};
@@ -282,11 +289,7 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
             }
             
 
-            //1th item is menu list (TODO)
-
-
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
+            if (isLogin && user!=null) return UserFragment.newInstance(user);
             return LoginFragment.newInstance("test","test");
         }
 
