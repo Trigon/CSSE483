@@ -9,4 +9,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login_in">Login in</string>
+    <string name="your_username">Your UserName</string>
+    <string name="your_password">Your Password</string>
+    <string name="log_in">LOG IN</string>
 </resources>

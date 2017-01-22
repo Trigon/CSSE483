@@ -1,5 +1,6 @@
 package edu.rosehulman.trigon.dhucafe;
 
+import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -28,7 +29,7 @@ import java.util.TimerTask;
 import edu.rosehulman.trigon.dhucafe.items.CafeContent;
 import edu.rosehulman.trigon.dhucafe.items.NewsContent;
 
-public class MainActivity extends AppCompatActivity implements  NewsLIstFragment.OnListFragmentInteractionListener,CafeListFragment.OnListFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity implements  NewsLIstFragment.OnListFragmentInteractionListener,CafeListFragment.OnListFragmentInteractionListener,LoginFragment.OnFragmentInteractionListener{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -162,6 +163,10 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
 
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 
 
     /**
@@ -282,7 +287,7 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
 
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            return LoginFragment.newInstance("test","test");
         }
 
         @Override

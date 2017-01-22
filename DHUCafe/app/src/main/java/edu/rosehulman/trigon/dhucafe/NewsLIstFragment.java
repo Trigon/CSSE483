@@ -1,11 +1,14 @@
 package edu.rosehulman.trigon.dhucafe;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +43,7 @@ public class NewsLIstFragment extends Fragment {
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static NewsLIstFragment newInstance(int columnCount) {
+
         NewsLIstFragment fragment = new NewsLIstFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
@@ -59,9 +63,20 @@ public class NewsLIstFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.e("???","test1");
         if (mrecycleView!=null) return mrecycleView;
-        View view = inflater.inflate(R.layout.fragment_news_list, container, false);
+        Log.e("???","test2");
+        View view = inflater.inflate(R.layout.fragment_news_list, container, false).findViewById(R.id.list);
+        SwipeRefreshLayout swipeRefreshLayout =(SwipeRefreshLayout)inflater.inflate(R.layout.fragment_news_list,container,false).findViewById(R.id.swiperefreshlayout);
+        Log.d("test??",swipeRefreshLayout+"");
+        swipeRefreshLayout.setColorSchemeColors(Color.RED, Color.BLUE);
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Log.d("swipe","ok");
+            }
+        });
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
