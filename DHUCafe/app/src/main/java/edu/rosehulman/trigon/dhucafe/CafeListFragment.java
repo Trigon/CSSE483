@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import edu.rosehulman.trigon.dhucafe.items.NewsContent;
-import edu.rosehulman.trigon.dhucafe.items.NewsContent.NewsItem;
+import edu.rosehulman.trigon.dhucafe.items.CafeContent;
+import edu.rosehulman.trigon.dhucafe.items.CafeContent.CafeItem;
 
 /**
  * A fragment representing a list of Items.
@@ -19,25 +19,25 @@ import edu.rosehulman.trigon.dhucafe.items.NewsContent.NewsItem;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class NewsLIstFragment extends Fragment {
+public class CafeListFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
-    private int mColumnCount = 1;
+    private int mColumnCount = 2;
     private OnListFragmentInteractionListener mListener;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public NewsLIstFragment() {
+    public CafeListFragment() {
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static NewsLIstFragment newInstance(int columnCount) {
-        NewsLIstFragment fragment = new NewsLIstFragment();
+    public static CafeListFragment newInstance(int columnCount) {
+        CafeListFragment fragment = new CafeListFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -56,7 +56,7 @@ public class NewsLIstFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_news_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_cafe_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -67,7 +67,7 @@ public class NewsLIstFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyNewsLIstRecyclerViewAdapter(NewsContent.ITEMS, mListener));
+            recyclerView.setAdapter(new MyCafeRecyclerViewAdapter(CafeContent.ITEMS, mListener));
         }
         return view;
     }
@@ -102,6 +102,6 @@ public class NewsLIstFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(NewsItem item);
+        void onListFragmentInteraction(CafeItem item);
     }
 }

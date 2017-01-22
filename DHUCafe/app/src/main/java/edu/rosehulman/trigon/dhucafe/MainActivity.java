@@ -25,9 +25,10 @@ import android.widget.Toast;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import edu.rosehulman.trigon.dhucafe.items.CafeContent;
 import edu.rosehulman.trigon.dhucafe.items.NewsContent;
 
-public class MainActivity extends AppCompatActivity implements  NewsLIstFragment.OnListFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity implements  NewsLIstFragment.OnListFragmentInteractionListener,CafeListFragment.OnListFragmentInteractionListener{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -130,6 +131,14 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
     }
 
     @Override
+    public void onListFragmentInteraction(CafeContent.CafeItem item) {
+        Log.d("callback",item.id);
+        mSectionsPagerAdapter.passCafeItem(item);
+        mSectionsPagerAdapter.setDetails(1,true);
+        mSectionsPagerAdapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void onBackPressed() {
         int position = mViewPager.getCurrentItem();
         if (mSectionsPagerAdapter.isDetail(position)){
@@ -152,6 +161,8 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
         super.onBackPressed();
 
     }
+
+
 
     /**
      * A placeholder fragment containing a simple view.
@@ -196,7 +207,8 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
         private Fragment[] fragments = new Fragment[3];
         private Fragment[] details = new Fragment[3];
         private boolean[] isDetailed ={false,false,false};
-        private NewsContent.NewsItem test;
+        private NewsContent.NewsItem newsItem;
+        private CafeContent.CafeItem cafeItem;
         public boolean isDetail(int position){
             return isDetailed[position];
         }
@@ -204,8 +216,12 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
             isDetailed[position]=flag;
         }
         public void passNewsItem(NewsContent.NewsItem test){
-            this.test=test;
+            this.newsItem =test;
         }
+        public void passCafeItem(CafeContent.CafeItem test){
+            this.cafeItem = test;
+        }
+
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -240,14 +256,26 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
             Log.d("getItem in ",position+"");
             //0th item is news list.
             if (position ==0) {
-                    if (isDetailed[0]){
-                        details[0] = (new NewsDetail()).newInstance(test.id,test.details);
-                        return details[0];
-                    }
-                fragments[0] = (new NewsLIstFragment()).newInstance(1);
+                if (isDetailed[0]){
+                    details[0] = NewsDetail.newInstance(newsItem.id, newsItem.details);
+                    return details[0];
+                }
+                if(fragments[0]!=null) return fragments[0];
+                fragments[0] = NewsLIstFragment.newInstance(1);
                 return fragments[0];
 
             };
+            if (position == 1){
+                if(isDetailed[1]){
+                    details[1]=CafeDetail.newInstance(cafeItem.id, cafeItem.details);
+                    return details[1];
+                }
+                if (fragments[1]!=null) return fragments[1];
+                fragments[1]=CafeListFragment.newInstance(2);
+                return fragments[1];
+
+            }
+            
 
             //1th item is menu list (TODO)
 
