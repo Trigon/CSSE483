@@ -161,8 +161,8 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
             return;
             }
         Log.d("Main BackPress","press");
+        this.finish();
         super.onBackPressed();
-
     }
 
     @Override
