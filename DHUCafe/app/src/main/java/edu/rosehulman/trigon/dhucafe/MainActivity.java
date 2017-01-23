@@ -1,5 +1,6 @@
 package edu.rosehulman.trigon.dhucafe;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -84,17 +85,17 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
             @Override
             public void onClick(View view) {
 
-                Snackbar.make(view, mViewPager.getCurrentItem()+"", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-//                try {
-//                    //利用Intent打开微信
-//                    Uri uri = Uri.parse("alipayqr://platformapi/startapp?saId=10000007");
-//                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-//                    startActivity(intent);
-//                } catch (Exception e) {
-//                    //若无法正常跳转，在此进行错误处理
-//                    Snackbar.make(view, "fuck", Snackbar.LENGTH_LONG)
-//                            .setAction("Action", null).show();
-//                }
+                //Snackbar.make(view, mViewPager.getCurrentItem()+"", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                try {
+                    //利用Intent打开微信
+                    Uri uri = Uri.parse("alipayqr://platformapi/startapp?saId=10000007");
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                } catch (Exception e) {
+                    //若无法正常跳转，在此进行错误处理
+                    Snackbar.make(view, "Please Download the AliPay", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
             }
         });
 
