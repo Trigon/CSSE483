@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import edu.rosehulman.trigon.dhucafe.items.CafeContent;
-import edu.rosehulman.trigon.dhucafe.items.CafeContent.CafeItem;
+
+import edu.rosehulman.trigon.dhucafe.items.CafeItem;
 
 /**
  * A fragment representing a list of Items.
@@ -52,7 +52,6 @@ public class CafeListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -73,7 +72,7 @@ public class CafeListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyCafeRecyclerViewAdapter(CafeContent.ITEMS, mListener));
+            recyclerView.setAdapter(new MyCafeRecyclerViewAdapter(mListener));
             mrecycleView=recyclerView;
         }
         return view;

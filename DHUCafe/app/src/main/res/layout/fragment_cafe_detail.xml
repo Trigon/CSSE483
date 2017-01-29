@@ -23,10 +23,16 @@
 
     <TextView
         android:layout_below="@id/title"
+        android:id="@+id/cafedetail"
         android:layout_width="match_parent"
         android:textSize="30sp"
         android:text="testtest\ntest\ntest\n"
         android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cafeprice"
+        android:layout_below="@id/cafedetail"/>
 
 
 </RelativeLayout>

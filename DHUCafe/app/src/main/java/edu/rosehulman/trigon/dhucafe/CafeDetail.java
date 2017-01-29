@@ -1,13 +1,23 @@
 package edu.rosehulman.trigon.dhucafe;
 
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+
+import edu.rosehulman.trigon.dhucafe.items.CafeItem;
 
 
 /**
@@ -20,31 +30,32 @@ public class CafeDetail extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM3 = "param3";
+    private static final String ARG_PARAM4 = "param4";
+    private static final String ARG_PARAM5 = "param5";
+
+
+
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    private CafeItem item;
+    private String name;
+    private String detail;
+    private String link;
+    private int price;
 
     public CafeDetail() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment NewsDetail.
-     */
     // TODO: Rename and change types and number of parameters
-    public static CafeDetail newInstance(String param1, String param2) {
-        Log.d("newInstnce",param1);
+    public static CafeDetail newInstance(CafeItem item) {
         CafeDetail fragment = new CafeDetail();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_PARAM1, item.getName());
+        args.putString(ARG_PARAM2, item.getDetail());
+        args.putString(ARG_PARAM3, item.getLink());
+        args.putInt(ARG_PARAM4,item.getPrice());
         fragment.setArguments(args);
         return fragment;
     }
@@ -54,8 +65,10 @@ public class CafeDetail extends Fragment {
         Log.d("onCreate","1");
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            name = getArguments().getString(ARG_PARAM1);
+            detail = getArguments().getString(ARG_PARAM2);
+            link = getArguments().getString(ARG_PARAM3);
+            price = getArguments().getInt(ARG_PARAM4);
         }
 
     }
@@ -66,8 +79,36 @@ public class CafeDetail extends Fragment {
         Log.d("onCreateView","123");
         // Inflate the layout for this fragment
         View  view =inflater.inflate(R.layout.fragment_cafe_detail, container, false);
-        TextView title = (TextView)view.findViewById(R.id.title);
-        title.setText("123");
+        TextView titleText = (TextView)view.findViewById(R.id.title);
+        TextView detailText =(TextView)view.findViewById(R.id.cafedetail);
+        TextView priceText = (TextView) view.findViewById(R.id.cafeprice);
+        final ImageView cafeImage = (ImageView) view.findViewById(R.id.dimage);
+        titleText.setText(name);
+        detailText.setText(detail);
+        priceText.setText(price+"");
+        class MyTask extends AsyncTask<String,Void,Bitmap> {
+
+            @Override
+            protected Bitmap doInBackground(String... strings) {
+                InputStream in = null;
+                try {
+                    in = new URL(strings[0]).openStream();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Bitmap bitmap = BitmapFactory.decodeStream(in);
+                return bitmap;
+
+                // Bitmap bmp = getURLimage(url);
+            }
+
+            @Override
+            protected void onPostExecute(Bitmap drawable) {
+                cafeImage.setImageBitmap(drawable);
+                super.onPostExecute(drawable);
+            }
+        }
+        new MyTask().execute(link);
         return view;
     }
 

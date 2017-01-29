@@ -27,7 +27,7 @@ import android.widget.Toast;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import edu.rosehulman.trigon.dhucafe.items.CafeContent;
+import edu.rosehulman.trigon.dhucafe.items.CafeItem;
 import edu.rosehulman.trigon.dhucafe.items.NewsContent;
 import edu.rosehulman.trigon.dhucafe.items.User;
 
@@ -135,8 +135,8 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
     }
 
     @Override
-    public void onListFragmentInteraction(CafeContent.CafeItem item) {
-        Log.d("callback",item.id);
+    public void onListFragmentInteraction(CafeItem item) {
+        Log.d("callback",item.getName());
         mSectionsPagerAdapter.passCafeItem(item);
         mSectionsPagerAdapter.setDetails(1,true);
         mSectionsPagerAdapter.notifyDataSetChanged();
@@ -221,7 +221,7 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
         private Fragment[] details = new Fragment[3];
         private boolean[] isDetailed ={false,false,false};
         private NewsContent.NewsItem newsItem;
-        private CafeContent.CafeItem cafeItem;
+        private CafeItem cafeItem;
         public boolean isDetail(int position){
             return isDetailed[position];
         }
@@ -231,7 +231,7 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
         public void passNewsItem(NewsContent.NewsItem test){
             this.newsItem =test;
         }
-        public void passCafeItem(CafeContent.CafeItem test){
+        public void passCafeItem(CafeItem test){
             this.cafeItem = test;
         }
 
@@ -280,7 +280,7 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
             };
             if (position == 1){
                 if(isDetailed[1]){
-                    details[1]=CafeDetail.newInstance(cafeItem.id, cafeItem.details);
+                    details[1]=CafeDetail.newInstance(cafeItem);
                     return details[1];
                 }
                 if (fragments[1]!=null) return fragments[1];

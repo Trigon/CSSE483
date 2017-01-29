@@ -4,8 +4,10 @@
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="10dp"
-    android:layout_marginBottom="15dp"
+
+    android:layout_margin="5dp"
+    android:layout_marginBottom="25dp"
+    android:layout_marginTop="10dp"
     app:cardElevation="8dp"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
@@ -19,24 +21,28 @@
 
         <ImageView
             android:id="@+id/cafeImage"
-            android:layout_width="match_parent"
+
             android:src="@drawable/test"
             android:layout_height="@dimen/news_image_height"
+            android:layout_width="match_parent"
             android:layout_alignParentTop="true" />
         <TextView
+            android:text="Name"
             android:layout_below="@+id/cafeImage"
             android:id="@+id/id"
+            android:paddingLeft="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?attr/textAppearanceListItem" />
 
         <TextView
-            android:layout_below="@+id/cafeImage"
+            android:text="detail"
+            android:paddingLeft="5dp"
+            android:layout_below="@+id/id"
             android:id="@+id/content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/id"
-            android:textAppearance="?attr/textAppearanceListItem" />
+            />
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>
