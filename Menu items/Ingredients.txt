@@ -1,0 +1,16 @@
+1. Cappuccino: espresso, steamed milk and foamed milk
+2. Mocha: espresso, chocolate and steamed milk
+3. Latte:espresso, steamed milk and foamed milk
+4. Macchiato: espresso, foamed milk
+5. Gingerbread Latte: espresso, cream, cloves, molasses, brown sugar, baking soda, ground ginger, and ground cinnamon
+6. Eggnog Latte: milk, eggnog, espresso, ground nutmeg
+7. Pumpkin Spiced Latte: milk, white sugar, vanilla extract, pumkin pie spice, espresso, whip cream
+8. Rasperry Chocolate Cake: salt, sugar, flour, water, chocolate, butter, eggs and rasperry
+9. Red Velvet Cake: white sugar, eggs, coca, red food coloring, salt, vanilla extract, buttermilk, flour, baking soda and milk
+10. Chocolate Cookie Cheesecake: oreo crumbs, butter, brown sugar, ground cinnamon, cream cheese, white sugar, whipping cream, flour, vanilla extract, eggs, sour cream, and chocolate chips
+11. Oatmeal Peanut Butter Cookies: Flour, baking soda, baking powder, salt, butter, peanut butter, egg, vanilla extract, cooking oats, sugar
+12. Lemon Pie Bars: flour, sugar, butter, eggs, white sugar, lemon juice, lemon zest
+13. Viennexican Coffee: espresso, whole milk, whipping cream, brown sugar, cocoa powder, vanilla extract, orange extract, ground cinnamon, ground cloves, ground nutmeg
+14. Thai Iced Coffee: sugar, heavy cream, ground cardamom, espresso, almond falvoring
+15. Americano: espresso, water
+16. Oolong Tea: Oolong tea leaves, water
