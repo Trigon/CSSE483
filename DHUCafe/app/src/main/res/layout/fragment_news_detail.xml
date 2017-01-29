@@ -12,8 +12,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textSize="30sp"
-                android:id="@+id/title"
+                android:id="@+id/newsName"
                 android:text="@string/hello_blank_fragment" />
+            <TextView
+                android:id="@+id/newsDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <ImageView
                 android:layout_below="@id/title"
                 android:id="@+id/dimage"
@@ -24,6 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="50sp"
+                android:id="@+id/newsDetail"
                 android:text="test\ntest\ntest\ntest\ntest\ntest\ntest\n"/>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

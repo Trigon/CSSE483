@@ -13,8 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import edu.rosehulman.trigon.dhucafe.items.NewsContent;
-import edu.rosehulman.trigon.dhucafe.items.NewsContent.NewsItem;
+import edu.rosehulman.trigon.dhucafe.items.NewsItem;
 
 /**
  * A fragment representing a list of Items.
@@ -87,7 +86,7 @@ public class NewsLIstFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyNewsLIstRecyclerViewAdapter(NewsContent.ITEMS, mListener));
+            recyclerView.setAdapter(new MyNewsLIstRecyclerViewAdapter(mListener));
             mrecycleView=recyclerView;
         }
         return view;

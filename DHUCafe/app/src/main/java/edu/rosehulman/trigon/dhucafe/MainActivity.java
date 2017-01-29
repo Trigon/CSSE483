@@ -28,7 +28,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import edu.rosehulman.trigon.dhucafe.items.CafeItem;
-import edu.rosehulman.trigon.dhucafe.items.NewsContent;
+import edu.rosehulman.trigon.dhucafe.items.NewsItem;
 import edu.rosehulman.trigon.dhucafe.items.User;
 
 public class MainActivity extends AppCompatActivity implements  NewsLIstFragment.OnListFragmentInteractionListener,CafeListFragment.OnListFragmentInteractionListener,LoginFragment.OnFragmentInteractionListener{
@@ -125,12 +125,12 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
     }
 
     @Override
-    public void onListFragmentInteraction(NewsContent.NewsItem item) {
-        Log.d("callback",item.id);
+    public void onListFragmentInteraction(NewsItem item) {
+        Log.d("callback",item.getName());
         mSectionsPagerAdapter.passNewsItem(item);
         mSectionsPagerAdapter.setDetails(0,true);
         mSectionsPagerAdapter.notifyDataSetChanged();
-        Log.d("have notified",item.id+"");
+        Log.d("have notified",item.getName()+"");
 
     }
 
@@ -220,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
         private Fragment[] fragments = new Fragment[3];
         private Fragment[] details = new Fragment[3];
         private boolean[] isDetailed ={false,false,false};
-        private NewsContent.NewsItem newsItem;
+        private NewsItem newsItem;
         private CafeItem cafeItem;
         public boolean isDetail(int position){
             return isDetailed[position];
@@ -228,7 +228,7 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
         public void setDetails(int position,boolean flag){
             isDetailed[position]=flag;
         }
-        public void passNewsItem(NewsContent.NewsItem test){
+        public void passNewsItem(NewsItem test){
             this.newsItem =test;
         }
         public void passCafeItem(CafeItem test){
@@ -270,7 +270,7 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
             //0th item is news list.
             if (position ==0) {
                 if (isDetailed[0]){
-                    details[0] = NewsDetail.newInstance(newsItem.id, newsItem.details);
+                    details[0] = NewsDetail.newInstance(newsItem);
                     return details[0];
                 }
                 if(fragments[0]!=null) return fragments[0];

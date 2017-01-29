@@ -16,26 +16,28 @@
         android:foreground="?attr/selectableItemBackground"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="15sp"
+            android:layout_height="wrap_content"
+            android:text="News Name"
+            android:id="@+id/newsName" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/newsDate"
+            android:layout_below="@id/newsName"/>
         <ImageView
             android:id="@+id/newsImage"
             android:layout_width="match_parent"
             android:src="@drawable/test"
             android:layout_height="@dimen/news_image_height"
-            android:layout_alignParentTop="true" />
+            android:layout_below="@id/newsDate" />
         <TextView
             android:layout_below="@+id/newsImage"
-            android:id="@+id/id"
+            android:id="@+id/newsDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceListItem" />
-
-        <TextView
-            android:layout_below="@+id/newsImage"
-            android:id="@+id/content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/id"
             android:textAppearance="?attr/textAppearanceListItem" />
     </RelativeLayout>
 
