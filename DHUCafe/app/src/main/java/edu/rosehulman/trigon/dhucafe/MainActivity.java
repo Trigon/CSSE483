@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
 
                 //Snackbar.make(view, mViewPager.getCurrentItem()+"", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 try {
-                    //利用Intent打开微信
+                    //利用Intent打开Alipay
                     Uri uri = Uri.parse("alipayqr://platformapi/startapp?saId=10000007");
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                     startActivity(intent);

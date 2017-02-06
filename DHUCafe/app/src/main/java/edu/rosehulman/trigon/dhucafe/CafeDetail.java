@@ -44,6 +44,8 @@ public class CafeDetail extends Fragment {
     private String link;
     private int price;
 
+
+
     public CafeDetail() {
         // Required empty public constructor
     }

@@ -30,7 +30,7 @@
         <ImageView
             android:id="@+id/newsImage"
             android:layout_width="match_parent"
-            android:src="@drawable/test"
+            android:src="@drawable/coffee_loading"
             android:layout_height="@dimen/news_image_height"
             android:layout_below="@id/newsDate" />
         <TextView
