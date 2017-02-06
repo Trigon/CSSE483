@@ -21,7 +21,7 @@
             <ImageView
                 android:layout_below="@id/title"
                 android:id="@+id/dimage"
-                android:src="@drawable/test"
+                android:src="@drawable/coffee_loading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <TextView

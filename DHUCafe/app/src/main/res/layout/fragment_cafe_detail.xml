@@ -8,7 +8,7 @@
 
     <ImageView
         android:id="@+id/dimage"
-        android:src="@drawable/test"
+        android:src="@drawable/coffee_loading"
         android:layout_width="match_parent"
         android:adjustViewBounds="true"
         android:layout_height="wrap_content"/>
