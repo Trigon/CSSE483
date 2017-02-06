@@ -3,13 +3,13 @@
 Made by Yilun Wu & Shijun Yu
 
 ##Progress##  
-##Week 8###
-2017-02-05
-Use Firebase Auth with Email and Password
-Register by Email and Password
-Get credit from Firebase
-Update FAB icon
-###Week 7###
+##Week 8###  
+2017-02-05  
+Use Firebase Auth with Email and Password  
+Register by Email and Password  
+Get credit from Firebase    
+Update FAB icon  
+###Week 7###  
 2017-01-29  
 Connect to Firebase, get News & Menu from firebase  
 2017-01-28  
