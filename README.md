@@ -2,7 +2,7 @@
 ##CSSE 483 Final Project##
 Made by Yilun Wu & Shijun Yu
 ##Progress##
-##Week 8###
+###Week 8###
 2017-02-05  
 Use Firebase Auth with Email and Password  
 Register by Email and Password  
