@@ -134,12 +134,12 @@ public class MyNewsLIstRecyclerViewAdapter extends RecyclerView.Adapter<MyNewsLI
         public void onChildChanged(DataSnapshot dataSnapshot, String s) {
             Log.d("firebase changed","update cafe");
             String key = dataSnapshot.getKey();
-            NewsItem newitem = dataSnapshot.getValue(NewsItem.class);
-            for (NewsItem item:mValues){
-                if (item.getKey().equals(key)){
-                    item.update(newitem);
-                    break;
-                }
+                NewsItem newitem = dataSnapshot.getValue(NewsItem.class);
+                for (NewsItem item:mValues){
+                    if (item.getKey().equals(key)){
+                        item.update(newitem);
+                        break;
+                    }
 
             }
             notifyDataSetChanged();

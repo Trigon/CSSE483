@@ -13,4 +13,12 @@
     <string name="your_username">Your UserName</string>
     <string name="your_password">Your Password</string>
     <string name="log_in">LOG IN</string>
+    <string name="userwelcome">Welcome logging! </string>
+    <string name="purchase">The credit you have: </string>
+    <string name="log_out">Log Out</string>
+    <string name="logfail">Log in Fail</string>
+    <string name="ask_reg">Reg with the email and password?</string>
+    <string name="reg">Register</string>
+    <string name="regsucc">Register Success</string>
+    <string name="regfail">Register Failed</string>
 </resources>

@@ -1,15 +1,30 @@
 package edu.rosehulman.trigon.dhucafe;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import edu.rosehulman.trigon.dhucafe.items.Userinfo;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +39,13 @@ public class LoginFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private FirebaseAuth.AuthStateListener mAuthStateListener;
+    private OnCompleteListener mOnCompleteListener;
+    private FirebaseAuth mAuth;
+    private FirebaseUser user;
+    private boolean mLoggingIn = false;
+    private String userstring;
+    private String passstring;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -35,6 +57,81 @@ public class LoginFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthStateListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthStateListener!=null){
+            mAuth.removeAuthStateListener(mAuthStateListener);}
+    }
+
+    private void init(){
+        Log.d("init","init");
+        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+
+                user = firebaseAuth.getCurrentUser();
+                Log.d("init", "Auth");
+                if (user != null) {
+                    Log.d("init", "RV");
+                    mLoggingIn = true;
+                    onButtonPressed(user);
+                }
+            }
+        };
+        mOnCompleteListener = new OnCompleteListener<AuthResult>(){
+            @Override
+            public void onComplete(@NonNull Task task) {
+                mLoggingIn=true;
+                if(!task.isSuccessful()){
+                    mLoggingIn=false;
+                    Toast.makeText(getActivity(),"Login Failed",Toast.LENGTH_SHORT).show();
+                    register(userstring,passstring);
+                }
+            }
+        };
+    }
+    private void register(final String email, final String password) {
+        new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.logfail)
+                .setMessage(R.string.ask_reg)
+                .setPositiveButton(R.string.reg,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                createUser(email, password);
+                            }
+                        })
+                .setNeutralButton(android.R.string.cancel, null)
+                .show();
+    }
+
+    private void createUser(String email, String password) {
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(
+                        new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+
+//                                String message =
+//                                        task.isSuccessful() ?getString(R.string.regsucc): getString(R.string.regfail);
+//                                Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT);
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                DatabaseReference mDataRef = FirebaseDatabase.getInstance().getReference().child("user/" + user.getUid());
+                                mDataRef.push().setValue(new Userinfo(0));
+//                                new AlertDialog.Builder(getActivity())
+//                                        .setMessage(message)
+//                                        .setPositiveButton("OK", null)
+//                                        .show();
+                            }
+                        });
+    }
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -44,6 +141,8 @@ public class LoginFragment extends Fragment {
      * @return A new instance of fragment LoginFragment.
      */
     // TODO: Rename and change types and number of parameters
+
+
     public static LoginFragment newInstance(String param1, String param2) {
         LoginFragment fragment = new LoginFragment();
         Bundle args = new Bundle();
@@ -56,6 +155,8 @@ public class LoginFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
+        init();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -68,13 +169,15 @@ public class LoginFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_login, container, false);
         final EditText mUsername = (EditText) view.findViewById(R.id.editText);
-        EditText mPassword = (EditText) view.findViewById(R.id.editText2);
+        final EditText mPassword = (EditText) view.findViewById(R.id.editText2);
         Button button = (Button) view.findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mUsername.getText().toString().length()>0){
-                    onButtonPressed(mUsername.getText().toString());
+                    userstring=mUsername.getText().toString();
+                    passstring =mPassword.getText().toString();
+                    mAuth.signInWithEmailAndPassword(userstring,passstring).addOnCompleteListener(mOnCompleteListener);
                 }
             }
         });
@@ -83,9 +186,9 @@ public class LoginFragment extends Fragment {
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(String username) {
+    public void onButtonPressed(FirebaseUser user) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(username);
+            mListener.onFragmentInteraction(user);
         }
     }
 
@@ -118,6 +221,6 @@ public class LoginFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(String username);
+        void onFragmentInteraction(FirebaseUser user);
     }
 }

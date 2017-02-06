@@ -4,12 +4,24 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import edu.rosehulman.trigon.dhucafe.items.NewsItem;
 import edu.rosehulman.trigon.dhucafe.items.User;
+import edu.rosehulman.trigon.dhucafe.items.Userinfo;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +40,11 @@ public class UserFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private User user;
+    private DatabaseReference mDataRef;
+    private TextView userView;
+    private TextView creditView;
+    private FirebaseAuth mAuth;
 
     private OnFragmentInteractionListener mListener;
 
@@ -42,12 +59,13 @@ public class UserFragment extends Fragment {
      * @return A new instance of fragment UserFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static UserFragment newInstance(User user) {
+    public static UserFragment newInstance(FirebaseUser user) {
         UserFragment fragment = new UserFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, user.getUsername());
-        //args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_PARAM1, user.getEmail());
+        args.putString(ARG_PARAM2, user.getUid());
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -56,8 +74,12 @@ public class UserFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
-            //mParam2 = getArguments().getString(ARG_PARAM2);
+            mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        mAuth = FirebaseAuth.getInstance();
+        mDataRef = FirebaseDatabase.getInstance().getReference().child("user/" + mParam2);
+        mDataRef.addChildEventListener(new NewsChildListener());
+
     }
 
     @Override
@@ -65,27 +87,30 @@ public class UserFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user, container, false);
-        TextView textView = (TextView)view.findViewById(R.id.username);
-        textView.setText("Current Username:"+mParam1);
-        return view;
-    }
+        userView = (TextView)view.findViewById(R.id.username);
+        userView.setText(mParam1);
+        creditView = (TextView)view.findViewById(R.id.credit);
+        Button button =(Button)view.findViewById(R.id.logout);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAuth.signOut();
+                mListener.signout();
+            }
+        });
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+        return view;
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
+        if (context instanceof LoginFragment.OnFragmentInteractionListener) {
+            mListener = (UserFragment.OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
     }
 
     @Override
@@ -106,6 +131,36 @@ public class UserFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void signout();
+    }
+
+    private class NewsChildListener implements ChildEventListener {
+        @Override
+        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+        }
+
+        @Override
+        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            Log.d("firebase changed","use credit");
+            String key = dataSnapshot.getKey();
+            Userinfo newitem = dataSnapshot.getValue(Userinfo.class);
+            creditView.setText(newitem.getCredit()+"");
+            }
+
+        @Override
+        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+        }
+
+        @Override
+        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
     }
 }

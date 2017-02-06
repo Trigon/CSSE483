@@ -24,6 +24,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -31,7 +34,7 @@ import edu.rosehulman.trigon.dhucafe.items.CafeItem;
 import edu.rosehulman.trigon.dhucafe.items.NewsItem;
 import edu.rosehulman.trigon.dhucafe.items.User;
 
-public class MainActivity extends AppCompatActivity implements  NewsLIstFragment.OnListFragmentInteractionListener,CafeListFragment.OnListFragmentInteractionListener,LoginFragment.OnFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity implements  NewsLIstFragment.OnListFragmentInteractionListener,CafeListFragment.OnListFragmentInteractionListener,LoginFragment.OnFragmentInteractionListener,UserFragment.OnFragmentInteractionListener{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -43,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
      */
     private static boolean mBackKeyPressed = false;
     private SectionsPagerAdapter mSectionsPagerAdapter;
-    private User user;
+    private FirebaseUser user;
 
 
     /**
@@ -166,13 +169,19 @@ public class MainActivity extends AppCompatActivity implements  NewsLIstFragment
         super.onBackPressed();
     }
 
-    @Override
-    public void onFragmentInteraction(String username) {
-        mSectionsPagerAdapter.isLogin = true;
-        user=new User(username);
-        mSectionsPagerAdapter.notifyDataSetChanged();
-        return;
 
+    @Override
+    public void onFragmentInteraction(FirebaseUser user) {
+        mSectionsPagerAdapter.isLogin = true;
+        this.user=user;
+        mSectionsPagerAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void signout() {
+        mSectionsPagerAdapter.isLogin = false;
+        this.user=null;
+        mSectionsPagerAdapter.notifyDataSetChanged();
     }
 
 

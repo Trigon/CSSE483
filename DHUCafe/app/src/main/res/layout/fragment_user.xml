@@ -4,7 +4,7 @@
 
     android:layout_height="match_parent">
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,12 +12,49 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/userwelcome"
+        android:textSize="30sp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/userwelcome"
+        android:layout_marginTop="20sp"
+        />
+    <TextView
+        android:layout_margin="25dp"
         android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
+        android:layout_below="@id/userwelcome"
         android:gravity="center"
         android:text="@string/hello_blank_fragment" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:id="@+id/purchase"
+        android:layout_below="@id/username"
+        android:layout_margin="10dp"
+        android:text="@string/purchase"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:id="@+id/credit"
+        android:text="0"
+        android:layout_margin="10dp"
+        android:layout_below="@id/username"
+        android:layout_toRightOf="@id/purchase"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:text="@string/log_out"
+        android:id="@+id/logout"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content" />
 
-</FrameLayout>
+</RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

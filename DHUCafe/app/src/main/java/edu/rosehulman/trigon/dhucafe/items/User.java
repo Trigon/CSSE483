@@ -9,6 +9,7 @@ import java.util.Date;
 public  class User {
     private String username = "N/A";
     private Date lastlogin;
+    private Userinfo info;
 
     public User(String username) {
         this.username = username;
@@ -30,6 +31,16 @@ public  class User {
         this.username=username;
         this.lastlogin=currentDate;
     }
+
+    public Userinfo getInfo(){
+        return this.info;
+    }
+
+    public void setInfo(Userinfo Info){
+        this.info = Info;
+    }
+
+
 
 
 }
