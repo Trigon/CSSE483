@@ -137,7 +137,9 @@ public class UserFragment extends Fragment {
     private class NewsChildListener implements ChildEventListener {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
+            Log.d("firebase changed","add userinfo");
+            Userinfo item = dataSnapshot.getValue(Userinfo.class);
+            creditView.setText(item.getCredit()+"");
         }
 
         @Override
