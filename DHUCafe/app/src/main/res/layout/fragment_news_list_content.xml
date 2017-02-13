@@ -18,11 +18,15 @@
         android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
-            android:textSize="15sp"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
             android:text="News Name"
+            android:layout_centerHorizontal="true"
             android:id="@+id/newsName" />
         <TextView
+            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/newsDate"
@@ -32,12 +36,16 @@
             android:layout_width="match_parent"
             android:src="@drawable/coffee_loading"
             android:layout_height="@dimen/news_image_height"
-            android:layout_below="@id/newsDate" />
+            android:layout_below="@id/newsDate"
+            android:layout_marginBottom="10dp"/>
         <TextView
             android:layout_below="@+id/newsImage"
             android:id="@+id/newsDetail"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:textAppearance="?attr/textAppearanceListItem" />
     </RelativeLayout>
 

@@ -36,6 +36,7 @@
             android:textAppearance="?attr/textAppearanceListItem" />
 
         <TextView
+            android:visibility="gone"
             android:text="detail"
             android:paddingLeft="5dp"
             android:layout_below="@+id/id"
