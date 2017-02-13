@@ -87,7 +87,7 @@ public class CafeDetail extends Fragment {
         final ImageView cafeImage = (ImageView) view.findViewById(R.id.dimage);
         titleText.setText(name);
         detailText.setText(detail);
-        priceText.setText(price+"");
+        priceText.setText("￥"+price);
         class MyTask extends AsyncTask<String,Void,Bitmap> {
 
             @Override
